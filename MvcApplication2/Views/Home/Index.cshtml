@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    function Search(tb)
+    {
+        var word = tb.value;
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("Get", "Home/Search?keyword=" + word);
+
+        var tbody = document.getElementById('tbody');
+
+        tbody.innerHTML = '';
+
+        xhr.onload = function () {
+            if (xhr.response && xhr.response != '') {
+                var products = JSON.parse(xhr.response);
+
+                for (var i = 0; i < products.length; i++) {
+                    tbody.innerHTML += "<tr><td>" + products[i].Name + "</td></tr>";
+                }
+            }
+        };
+        xhr.send(null);
+    }
+</script>
+
+<table>
+    <tbody id="tbody">
+        
+    </tbody>
+</table>
+
+<h2>Search</h2>
+<input type="text" name="name" value=" " onkeyup="Search(this)"/>
